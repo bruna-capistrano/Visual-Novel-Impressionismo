@@ -33,13 +33,17 @@ default pista_quadro_oculto = False
 label start:
 
     scene bg_paris_morning with fade
-    play music "ambiente_paris.ogg"
+    play music "ambiente_paris.ogg" fadein 1.5
+
+    window hide
+    pause 1.0
+    window show
 
     "Paris, outubro de 1890. Uma névoa leve cobre a cidade, tornando seus contornos mais suaves, quase como se tudo fosse parte de uma pintura."
 
     "Você acaba de chegar à capital francesa, trazendo apenas seu caderno de esboços e uma carta misteriosa que menciona o desaparecimento do mestre impressionista Camille Pissarro."
 
-    show protagonista at center
+    show protagonista at center with fade
 
     protagonist "É aqui que começa minha busca. Se Pissarro realmente sumiu, alguém precisa encontrar respostas."
 
@@ -49,12 +53,13 @@ label start:
 
 label cena_cafe:
 
-    scene bg_cafe_les_deux_magots with dissolve
-    play music "cafe_ambiente.ogg"
+    scene bg_cafe_les_deux_magots with fade
+    play music "cafe_ambiente.ogg" fadeout 2.0 fadein 1.5    
+    pause 1.0
 
-    "O aroma de café fresco, o som das conversas animadas e o tilintar de xícaras criam uma atmosfera viva."
+    "O aroma de café fresco, o som das conversas animadas e o tilintar de xícaras criam uma atmosfera viva." with dissolve
 
-    "Ao fundo, você reconhece Claude Monet sentado com outros pintores. Há uma cadeira vazia próxima."
+    "Ao fundo, você reconhece Claude Monet sentado com outros pintores. Há uma cadeira vazia próxima." with dissolve
 
     while True:
         menu:
@@ -71,9 +76,9 @@ label cena_cafe:
 
 label falar_com_monet:
 
-    show monet at left
+    show monet at left with moveinleft
 
-    monet "Bonjour. Vejo que é novo por aqui. Está procurando alguém?"
+    monet "Bonjour. Vejo que é novo por aqui. Está procurando alguém?"  with dissolve
 
     protagonist "Na verdade, sim. Estou atrás de informações sobre Camille Pissarro. Soube que desapareceu."
 
@@ -83,7 +88,11 @@ label falar_com_monet:
 
     $ pista_rochefort = True
 
-    "Você anota mentalmente o nome. Talvez seja o começo de algo."
+    "Você anota mentalmente o nome. Talvez seja o começo de algo."  with dissolve
+
+    jump menu_monet
+
+label menu_monet:
 
     menu:
         "Ver pistas coletadas":
@@ -91,8 +100,10 @@ label falar_com_monet:
         "Perguntar mais sobre Rochefort":
             jump perguntar_rochefort
         "Observar o café em silêncio agora":
+            hide monet with dissolve
             jump observar_cafe
         "Agradecer e sair discretamente":
+            hide monet with dissolve
             jump sair_cafe
 
 label observar_cafe:
@@ -105,20 +116,23 @@ label observar_cafe:
 
     "Você faz uma anotação mental para visitar essa galeria."
 
-    jump cena_cafe #jump sair_cafe
+    jump menu_monet #falar_com_monet #jump cena_cafe #jump sair_cafe
 
 label perguntar_rochefort:
 
-    monet "Um crítico influente... e cruel. Disse que os trabalhos recentes de Pissarro estavam decadentes. Camille ficou devastado."
+    monet "Um crítico influente... e cruel. Disse que os trabalhos recentes de Pissarro estavam decadentes. Camille ficou devastado."  with dissolve
 
-    monet "Se alguém o empurrou para o silêncio, foi aquele homem."
+    monet "Se alguém o empurrou para o silêncio, foi aquele homem."  with dissolve
+    
+    pause 1.0
 
-    jump sair_cafe
+    jump menu_monet #falar_com_monet #jump sair_cafe
 
 label sair_cafe:
 
     scene bg_rua_com_nevoa with fade
-    stop music fadeout 2.0
+    play music "cafe_ambiente2.ogg" fadeout 2.0 fadein 1.5
+    #stop music fadeout 2.0
     if pista_rochefort:
         "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
         jump cena_atelier  # Monet mencionou Rochefort → leva ao ateliê
@@ -138,11 +152,12 @@ label sair_cafe:
 label cena_atelier:
 
     scene bg_atelier_pissarro with dissolve
-    play music "atelier_silencio.ogg"
+    play music "atelier_silencio.ogg" fadeout 2.0 fadein 1.5    
+    pause 1.0
 
-    "O ateliê de Camille Pissarro está silencioso. A luz suave da manhã atravessa as janelas altas, iluminando telas inacabadas e pincéis manchados de tinta."
+    "O ateliê de Camille Pissarro está silencioso. A luz suave da manhã atravessa as janelas altas, iluminando telas inacabadas e pincéis manchados de tinta." with dissolve
 
-    show cezanne at right  
+    show cezanne at right with moveinright  
 
     "Você vê Paul Cézanne observando uma das obras de Pissarro. Ele parece perdido em pensamentos."
 
@@ -258,11 +273,13 @@ label esperar_jardim:
 label final_confronto:
 
     scene bg_jardim_noite with fade
+    play music "tensao_final.ogg" fadeout 2.0 fadein 1.5
 
-    "Uma figura surge da escuridão — o crítico Rochefort. Ele está tenso, visivelmente abalado."
 
-    show rochefort at right
-    show protagonista at left
+    "Uma figura surge da escuridão — o crítico Rochefort. Ele está tenso, visivelmente abalado." with dissolve
+
+    show rochefort at right with moveinright
+    show protagonista at left with dissolve
 
     rochefort "Você... não devia estar aqui. Isso não é da sua conta."
 
@@ -288,7 +305,7 @@ label final_confronto:
 label final_bom:
 
     scene bg_jardim_noite with fade
-    #play music "epilogo_reflexivo.ogg"
+    play music "epilogo_reflexivo.ogg" fadeout 2.0 fadein 1.5
 
     "Você apresenta todas as pistas. Rochefort, pressionado, confessa: manipulou a crítica para destruir a reputação de Pissarro."
 
@@ -357,7 +374,7 @@ label mostrar_pistas:
 label final_neutro:
 
     scene bg_jardim_noite with fade
-    play music "epilogo_reflexivo.ogg"
+    play music "epilogo_reflexivo.ogg" fadeout 2.0 fadein 1.5
 
     "Você permaneceu em silêncio, e assim também a verdade."
     "O tempo passou e Camille nunca apareceu."
@@ -379,14 +396,14 @@ label final_medio:
 label cena_galeria:
 
     scene bg_galeria_arte with dissolve
-    play music "galeria_ambiente.ogg"
+    play music "galeria_ambiente.ogg" fadeout 2.0 fadein 1.5
 
-    "A galeria é silenciosa, quase solene. Obras de arte alinhadas nas paredes observam em silêncio sua entrada."
+    "A galeria é silenciosa, quase solene. Obras de arte alinhadas nas paredes observam em silêncio sua entrada." with dissolve
 
     "Marie, a curadora da galeria, está organizando alguns papéis atrás de uma pequena mesa. Ela ergue os olhos ao ver você."
 
-    show marie at right
-    show protagonista at left
+    show marie at right with moveinright
+    show protagonista at left with dissolve
 
     marie "Ah, você deve ser o investigador de quem ouvi falar. Está aqui por causa de Pissarro, não é?"
 
