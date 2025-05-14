@@ -116,7 +116,7 @@ label observar_cafe:
 
     "Você faz uma anotação mental para visitar essa galeria."
 
-    jump menu_monet #falar_com_monet #jump cena_cafe #jump sair_cafe
+    jump menu_monet 
 
 label perguntar_rochefort:
 
@@ -126,36 +126,22 @@ label perguntar_rochefort:
     
     pause 1.0
 
-    jump menu_monet #falar_com_monet #jump sair_cafe
+    jump menu_monet 
 
 label sair_cafe:
 
     scene bg_rua_com_nevoa with fade
     play music "cafe_ambiente2.ogg" fadeout 2.0 fadein 1.5
-    #stop music fadeout 2.0
+
     jump cena_duvida
-    # if pista_rochefort:
-    #     "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
-    #     jump cena_atelier  # Monet mencionou Rochefort → leva ao ateliê
 
-    # elif pista_galeria:
-    #     "Você sai do café intrigado com a conversa sobre a galeria que recusou a obra de Pissarro."
-    #     jump cena_galeria  # observação da conversa → leva à galeria
-
-    # else:
-    #     "Você sai do café com uma sensação estranha — algo escapou por entre seus dedos."
-    #     jump cena_atelier  # fallback padrão (pode ser ajustado)
-
-#    "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
-
-#    jump cena_atelier
 
 label cena_duvida:
 
     scene bg_rua_com_nevoa with fade
-    play music "reflexao_ambiente.ogg" fadein 1.5
+    play music "descoberta_suave.ogg" fadein 1.5
     show protagonista at left with moveinleft
-    
+
     "Você caminha pelas ruas enevoadas de Paris, com o som abafado de carruagens e passos ao fundo."
 
     "Apesar das pistas obtidas, algo em você hesita. E se tudo isso não passar de uma paranoia? Uma viagem sem volta?"
@@ -174,7 +160,6 @@ label cena_duvida:
     else:
         jump cena_atelier
         
-    #jump proximo_destino
 
 label proximo_destino:
 
@@ -232,7 +217,7 @@ label vasculhar_atelier:
 
     cezanne "Se ele for a algum lugar, será lá. O Jardim das Tulherias sempre foi onde ele pintava quando queria desaparecer do mundo."
 
-    jump reflexao_atelier #jump decidir_proxima_acao
+    jump reflexao_atelier 
 
 label decidir_proxima_acao:
 
@@ -405,6 +390,7 @@ label final_bom:
     "Mas Camille escapou. Fingiu seu desaparecimento e está agora escondido, pintando sua obra final."
 
     scene bg_atelier_pissarro with fade
+    play music "epilogo_feliz.ogg" fadeout 2.0 fadein 1.5
     show pissarro at center
 
     "Dias depois, você recebe um convite secreto. Ao chegar ao ateliê, encontra Camille Pissarro em silêncio, diante de uma tela imensa, pincel na mão."
@@ -415,11 +401,6 @@ label final_bom:
 
     pissarro "Então entenderá por que tudo isso foi necessário."
 
-    # "Camille sorri, volta-se para a tela e continua a pintar. Você sai do ateliê com a certeza de que a verdade, às vezes, deve permanecer entre artistas."
-
-    # scene black with fade
-    # centered "Fim — O Guardião da Verdade"
-    # return
     show protagonista at left 
     "Você observa a obra em silêncio. Agora, cabe a você decidir o destino dessa verdade."
 
@@ -432,7 +413,7 @@ label final_bom:
 label final_revelado:
 
     scene bg_atelier_pissarro with fade
-    play music "epilogo_reflexivo.ogg" fadein 1.5
+    play music "epilogo_reflexivo1.ogg" fadein 1.5
 
     "Você decide que o mundo precisa conhecer a última obra de Pissarro — uma peça que transcende a pintura e se torna manifesto."
 
@@ -503,6 +484,7 @@ label final_neutro:
 
 label final_medio:
 
+    play music "descoberta_intensa.ogg" fadeout 2.0 fadein 1.5
     show protagonista at left with moveinleft
     "Rochefort hesita, mas foge sem revelar tudo. Você leva as pistas à polícia, que arquiva o caso por falta de provas."
 
@@ -543,17 +525,9 @@ label cena_galeria:
             jump perguntar_tela
         "Olhar a sala de exposições":
             jump investigar_sala
-    # menu:
-    #     "Ver pistas coletadas":
-    #         call mostrar_pistas from _call_mostrar_pistas_8
-    #     "Perguntar sobre a tela recusada":
-    #         jump perguntar_tela
-
-    #     "Investigar a sala de exposições":
-    #         jump investigar_sala
 
 label duvidar_marie:
-    play music "tensao_final.ogg" fadeout 2.0 fadein 1.5
+    play music "descoberta_suave.ogg" fadeout 2.0 fadein 1.5
     show marie at right with moveinright
     show protagonista at left with dissolve
 
@@ -602,3 +576,4 @@ label investigar_sala:
     "Você anota o conteúdo e cobre a obra novamente."
 
     jump decidir_proxima_acao
+
