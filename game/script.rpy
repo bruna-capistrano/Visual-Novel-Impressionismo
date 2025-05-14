@@ -133,21 +133,57 @@ label sair_cafe:
     scene bg_rua_com_nevoa with fade
     play music "cafe_ambiente2.ogg" fadeout 2.0 fadein 1.5
     #stop music fadeout 2.0
-    if pista_rochefort:
-        "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
-        jump cena_atelier  # Monet mencionou Rochefort → leva ao ateliê
+    jump cena_duvida
+    # if pista_rochefort:
+    #     "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
+    #     jump cena_atelier  # Monet mencionou Rochefort → leva ao ateliê
 
-    elif pista_galeria:
-        "Você sai do café intrigado com a conversa sobre a galeria que recusou a obra de Pissarro."
-        jump cena_galeria  # observação da conversa → leva à galeria
+    # elif pista_galeria:
+    #     "Você sai do café intrigado com a conversa sobre a galeria que recusou a obra de Pissarro."
+    #     jump cena_galeria  # observação da conversa → leva à galeria
 
-    else:
-        "Você sai do café com uma sensação estranha — algo escapou por entre seus dedos."
-        jump cena_atelier  # fallback padrão (pode ser ajustado)
+    # else:
+    #     "Você sai do café com uma sensação estranha — algo escapou por entre seus dedos."
+    #     jump cena_atelier  # fallback padrão (pode ser ajustado)
 
 #    "Você sai do café com mais perguntas do que respostas... mas agora com um nome: Rochefort."
 
 #    jump cena_atelier
+
+label cena_duvida:
+
+    scene bg_rua_com_nevoa with fade
+    play music "reflexao_ambiente.ogg" fadein 1.5
+    show protagonista at left with moveinleft
+    
+    "Você caminha pelas ruas enevoadas de Paris, com o som abafado de carruagens e passos ao fundo."
+
+    "Apesar das pistas obtidas, algo em você hesita. E se tudo isso não passar de uma paranoia? Uma viagem sem volta?"
+
+    protagonist "Camille era excêntrico, mas... desaparecer assim?"
+
+    "Você para na calçada. O vento levanta o canto do seu caderno de esboços. Dentro, um bilhete cai — era parte da carta original."
+
+    "Bilhete: 'Só quem busca a verdade com a alma inteira pode vê-la sob a névoa.'"
+
+    "Você fecha os olhos por um instante. Quando os abre, sente que precisa continuar."
+    if pista_rochefort:
+        jump cena_atelier
+    elif pista_galeria:
+        jump cena_galeria
+    else:
+        jump cena_atelier
+        
+    #jump proximo_destino
+
+label proximo_destino:
+
+    if pista_rochefort:
+        jump cena_atelier
+    elif pista_galeria:
+        jump cena_galeria
+    else:
+        jump cena_atelier
 
 label cena_atelier:
 
@@ -161,10 +197,11 @@ label cena_atelier:
 
     "Você vê Paul Cézanne observando uma das obras de Pissarro. Ele parece perdido em pensamentos."
 
+    show protagonista at left with moveinleft
     protagonist "Paul Cézanne?"
 
     cezanne "Hm? Ah... você deve ser mais um dos curiosos. Está atrás de Camille também?"
-
+    
     protagonist "Sim. Vim porque me disseram que ele desapareceu. E que você talvez soubesse de algo."
 
     cezanne "Ele estava... perturbado. Falava de uma obra que ninguém jamais poderia ver. Uma despedida."
@@ -195,7 +232,7 @@ label vasculhar_atelier:
 
     cezanne "Se ele for a algum lugar, será lá. O Jardim das Tulherias sempre foi onde ele pintava quando queria desaparecer do mundo."
 
-    jump decidir_proxima_acao
+    jump reflexao_atelier #jump decidir_proxima_acao
 
 label decidir_proxima_acao:
 
@@ -228,10 +265,38 @@ label decidir_proxima_acao:
     #     "Visitar a galeria que recusou a obra de Pissarro":
     #         jump cena_galeria
 
+label reflexao_atelier:
+
+    scene bg_atelier_pissarro with fade
+    play music "descoberta_suave.ogg" fadeout 2.0 fadein 1.5
+
+    show protagonista at left with moveinleft     
+
+    "Você se detém diante de uma pintura inacabada encostada no canto mais escuro do ateliê."
+
+    "Ao se aproximar, reconhece traços familiares... mas há algo diferente."
+
+    "Cores mais densas, pinceladas mais bruscas. A tela parece pulsar com urgência e silêncio ao mesmo tempo."
+
+    protagonist "Essa... não é uma paisagem. É um grito contido."
+
+    "No canto inferior da tela, há uma anotação rabiscada:"
+
+    "\"A arte não suplica por aplauso. Ela exige coragem.\""
+
+    "Você sente um arrepio. Essa não é mais uma investigação — é um chamado pessoal."
+
+    $ pista_obra_despedida = True
+
+    "Com olhos mais atentos e alma inquieta, você guarda o caderno de esboços. Está pronto para o que vier."
+
+    jump decidir_proxima_acao
+
 label cena_jardim:
 
     scene bg_jardim_tulherias_entardecer with dissolve
     play music "jardim_suave.ogg"
+    show protagonista at left with moveinleft
 
     "O sol começa a se pôr quando você chega ao Jardim das Tulherias. A luz dourada da tarde pinta as folhas com tons de fogo."
 
@@ -259,6 +324,32 @@ label explorar_jardim:
     $ pista_bilhete_jardim = True
 
     "Enquanto lê, você ouve passos ao longe..."
+    "Mas, por um instante, tudo silencia — e algo acontece."
+
+    scene bg_jardim_pissarro with fade
+    play music "visao_epifania.ogg" fadein 2.0
+
+    "A luz da lua atravessa as copas das árvores, formando uma clareira difusa à sua frente."
+
+    "Ali, entre sombras e folhas, uma figura parece se formar por instantes... não é real, mas também não é apenas imaginação."
+
+    "Camille Pissarro — ou algo como a memória dele — está de pé diante de uma tela invisível, pintando com gestos lentos e etéreos."
+
+    protagonist "Isso é... impossível."
+
+    "Pissarro ergue o olhar e, sem falar, apenas sorri. Ele aponta para o bilhete em sua mão."
+
+    "Você ouve sua própria voz em pensamento:"
+
+    show protagonista at right with dissolve
+
+    protagonist "A luz muda tudo. Não confie no que dizem..."
+
+    "A figura se desfaz com o vento. A brisa agora é fria. E os passos voltam, firmes, reais, determinados."
+
+    $ pista_bilhete_jardim = True
+
+    "Você se levanta. Algo está vindo — e agora, você está pronto."
 
     jump final_confronto
 
@@ -306,6 +397,8 @@ label final_bom:
 
     scene bg_jardim_noite with fade
     play music "epilogo_reflexivo.ogg" fadeout 2.0 fadein 1.5
+    show rochefort at right 
+    show protagonista at left 
 
     "Você apresenta todas as pistas. Rochefort, pressionado, confessa: manipulou a crítica para destruir a reputação de Pissarro."
 
@@ -322,21 +415,45 @@ label final_bom:
 
     pissarro "Então entenderá por que tudo isso foi necessário."
 
-    "Camille sorri, volta-se para a tela e continua a pintar. Você sai do ateliê com a certeza de que a verdade, às vezes, deve permanecer entre artistas."
+    # "Camille sorri, volta-se para a tela e continua a pintar. Você sai do ateliê com a certeza de que a verdade, às vezes, deve permanecer entre artistas."
+
+    # scene black with fade
+    # centered "Fim — O Guardião da Verdade"
+    # return
+    show protagonista at left 
+    "Você observa a obra em silêncio. Agora, cabe a você decidir o destino dessa verdade."
+
+    menu:
+        "Revelar a verdade ao mundo":
+            jump final_revelado
+
+        "Proteger o segredo de Pissarro":
+            jump final_guardado
+label final_revelado:
+
+    scene bg_atelier_pissarro with fade
+    play music "epilogo_reflexivo.ogg" fadein 1.5
+
+    "Você decide que o mundo precisa conhecer a última obra de Pissarro — uma peça que transcende a pintura e se torna manifesto."
+
+    "A notícia do reaparecimento do mestre abala Paris. A exposição secreta lota. A obra divide opiniões, mas reacende o espírito do impressionismo."
+
+    "Pissarro, relutante, aceita a nova fama. Você é lembrado como o responsável por trazer à luz um dos maiores enigmas da arte moderna."
+
+    scene black with fade
+    centered "Fim — A Luz da Verdade"
+    return
+
+
+label final_guardado:
+
+    "Camille sorri, volta-se para a tela e continua a pintar."
+
+    "Você sai do ateliê com a certeza de que a verdade, às vezes, deve permanecer entre artistas."
 
     scene black with fade
     centered "Fim — O Guardião da Verdade"
     return
-
-#"Você apresenta todas as pistas. Rochefort, pressionado, confessa: manipulou a crítica para destruir a reputação de Pissarro."
-
-# "Mas Camille escapou. Fingiu seu desaparecimento e está agora escondido, pintando sua obra final."
-
-#"Você decide manter o segredo — a arte precisa de silêncio, às vezes."
-
-#  scene black with fade
-# centered "Fim — O Guardião da Verdade"
-#return
 
 label mostrar_pistas:
 
@@ -375,6 +492,7 @@ label final_neutro:
 
     scene bg_jardim_noite with fade
     play music "epilogo_reflexivo.ogg" fadeout 2.0 fadein 1.5
+    show protagonista at left with moveinleft
 
     "Você permaneceu em silêncio, e assim também a verdade."
     "O tempo passou e Camille nunca apareceu."
@@ -385,6 +503,7 @@ label final_neutro:
 
 label final_medio:
 
+    show protagonista at left with moveinleft
     "Rochefort hesita, mas foge sem revelar tudo. Você leva as pistas à polícia, que arquiva o caso por falta de provas."
 
     "Camille continua desaparecido. A cidade esquece. Mas você não."
@@ -411,14 +530,50 @@ label cena_galeria:
 
     marie "Uma tela... ousada demais para os padrões da crítica atual. Camille parecia frustrado. Disse que era sua melhor pintura."
 
+    pause 0.5
+
+    "Marie parece hesitar, como se medisse suas palavras."
+
     menu:
         "Ver pistas coletadas":
             call mostrar_pistas from _call_mostrar_pistas_8
-        "Perguntar sobre a tela recusada":
+        "Questionar o motivo da recusa da galeria":
+            jump duvidar_marie
+        "Pedir informações sobre a obra de forma neutra":
             jump perguntar_tela
-
-        "Investigar a sala de exposições":
+        "Olhar a sala de exposições":
             jump investigar_sala
+    # menu:
+    #     "Ver pistas coletadas":
+    #         call mostrar_pistas from _call_mostrar_pistas_8
+    #     "Perguntar sobre a tela recusada":
+    #         jump perguntar_tela
+
+    #     "Investigar a sala de exposições":
+    #         jump investigar_sala
+
+label duvidar_marie:
+    play music "tensao_final.ogg" fadeout 2.0 fadein 1.5
+    show marie at right with moveinright
+    show protagonista at left with dissolve
+
+    protagonist "Marie... não entendo. Se era a melhor pintura dele, por que foi rejeitada?"
+
+    marie "A crítica... é cega ao que desafia."
+
+    "Ela olha para o chão por um momento, depois se recompõe."
+
+    marie "Mas talvez nem todos aqui concordaram com a decisão. Talvez alguns tentaram proteger Camille do próprio sistema que o destruiu."
+
+    "Você sente um calafrio — é possível que Marie tenha mais envolvimento do que diz."
+
+    $ pista_envelope_galeria = True
+
+    "Ainda assim, ela entrega um envelope selado com as iniciais 'C.P.'."
+
+    protagonist "Obrigada, Marie. Isso pode ser importante."
+
+    jump decidir_proxima_acao
 
 label perguntar_tela:
 
