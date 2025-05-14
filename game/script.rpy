@@ -241,14 +241,7 @@ label decidir_proxima_acao:
                     call mostrar_pistas from _call_mostrar_pistas_4
                 "Ir ao Jardim das Tulherias":
                     jump cena_jardim
-    # menu:
-    #     "Ver pistas coletadas":
-    #         call mostrar_pistas
-    #     "Ir ao Jardim das Tulherias":
-    #         jump cena_jardim
-
-    #     "Visitar a galeria que recusou a obra de Pissarro":
-    #         jump cena_galeria
+   
 
 label reflexao_atelier:
 
@@ -311,13 +304,15 @@ label explorar_jardim:
     "Enquanto lê, você ouve passos ao longe..."
     "Mas, por um instante, tudo silencia — e algo acontece."
 
-    scene bg_jardim_pissarro with fade
+    scene bg_jardim_miragem with fade
     play music "visao_epifania.ogg" fadein 2.0
 
     "A luz da lua atravessa as copas das árvores, formando uma clareira difusa à sua frente."
 
     "Ali, entre sombras e folhas, uma figura parece se formar por instantes... não é real, mas também não é apenas imaginação."
 
+    show pissarro miragem at left with dissolve 
+    
     "Camille Pissarro — ou algo como a memória dele — está de pé diante de uma tela invisível, pintando com gestos lentos e etéreos."
 
     protagonist "Isso é... impossível."
