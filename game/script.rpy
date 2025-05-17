@@ -18,6 +18,8 @@ default pista_presenca_pissarro = False
 default pista_bilhete_jardim = False
 default pista_envelope_galeria = False
 default pista_quadro_oculto = False
+default pista_rochefort2 = False
+
 
 label start:
 
@@ -49,14 +51,16 @@ label cena_cafe:
     "O aroma de café fresco, o som das conversas animadas e o tilintar de xícaras criam uma atmosfera viva." with dissolve
 
     "Ao fundo, você reconhece Claude Monet sentado com outros pintores. Há uma cadeira vazia próxima." with dissolve
+    
+    jump menu_cafe
 
+label menu_cafe:
     while True:
         menu:
             "Ver pistas coletadas":
                 call mostrar_pistas from _call_mostrar_pistas
             "Aproximar-se de Monet e cumprimentá-lo" if not pista_rochefort:
                 jump falar_com_monet
-
             "Observar o café em silêncio primeiro" if not pista_galeria:
                 jump observar_cafe
             
@@ -86,9 +90,9 @@ label menu_monet:
     menu:
         "Ver pistas coletadas":
             call mostrar_pistas from _call_mostrar_pistas_1
-        "Perguntar mais sobre Rochefort":
+        "Perguntar mais sobre Rochefort" if not pista_rochefort2:
             jump perguntar_rochefort
-        "Observar o café em silêncio agora":
+        "Observar o café em silêncio agora" if not pista_galeria:
             hide monet with dissolve
             jump observar_cafe
         "Agradecer e sair discretamente":
@@ -105,7 +109,10 @@ label observar_cafe:
 
     "Você faz uma anotação mental para visitar essa galeria."
 
-    jump menu_monet 
+    if pista_rochefort:
+        jump menu_monet  # Já falou com Monet, então pode voltar ao menu dele
+    else:
+        jump menu_cafe  # Ainda não falou com Monet — volta ao menu geral do café
 
 label perguntar_rochefort:
 
@@ -113,6 +120,8 @@ label perguntar_rochefort:
 
     monet "Se alguém o empurrou para o silêncio, foi aquele homem."  with dissolve
     
+    $ pista_rochefort2 = True
+
     pause 1.0
 
     jump menu_monet 
@@ -123,7 +132,9 @@ label sair_cafe:
     play music "cafe_ambiente2.ogg" fadeout 2.0 fadein 1.5
 
     jump cena_duvida
+    # Monet mencionou Rochefort → leva ao ateliê
 
+    # observação da conversa → leva à galeria
 
 label cena_duvida:
 
@@ -148,7 +159,6 @@ label cena_duvida:
         jump cena_galeria
     else:
         jump cena_atelier
-        
 
 label proximo_destino:
 
@@ -183,6 +193,7 @@ label cena_atelier:
     menu:
         "Ver pistas coletadas":
             call mostrar_pistas from _call_mostrar_pistas_2
+        
         "Perguntar sobre essa obra de despedida":
             jump obra_despedida
 
@@ -230,7 +241,6 @@ label decidir_proxima_acao:
                     call mostrar_pistas from _call_mostrar_pistas_4
                 "Ir ao Jardim das Tulherias":
                     jump cena_jardim
-   
 
 label reflexao_atelier:
 
@@ -262,7 +272,7 @@ label reflexao_atelier:
 label cena_jardim:
 
     scene bg_jardim_tulherias_entardecer with dissolve
-    play music "jardim_suave.ogg"
+    play music "jardim_suave.ogg" fadeout 2.0 fadein 1.5
     show protagonista at left with moveinleft
 
     "O sol começa a se pôr quando você chega ao Jardim das Tulherias. A luz dourada da tarde pinta as folhas com tons de fogo."
@@ -294,14 +304,12 @@ label explorar_jardim:
     "Mas, por um instante, tudo silencia — e algo acontece."
 
     scene bg_jardim_miragem with fade
-    play music "visao_epifania.ogg" fadein 2.0
+    play music "atelier_silencio.ogg" fadeout 2.0 fadein 1.5
 
     "A luz da lua atravessa as copas das árvores, formando uma clareira difusa à sua frente."
 
     "Ali, entre sombras e folhas, uma figura parece se formar por instantes... não é real, mas também não é apenas imaginação."
-
     show pissarro miragem at left with dissolve 
-
     "Camille Pissarro — ou algo como a memória dele — está de pé diante de uma tela invisível, pintando com gestos lentos e etéreos."
 
     protagonist "Isso é... impossível."
@@ -397,7 +405,7 @@ label final_bom:
 label final_revelado:
 
     scene bg_atelier_pissarro with fade
-    play music "epilogo_reflexivo1.ogg" fadein 1.5
+    play music "epilogo_reflexivo1.ogg" fadeout 2.0 fadein 1.5
 
     "Você decide que o mundo precisa conhecer a última obra de Pissarro — uma peça que transcende a pintura e se torna manifesto."
 
@@ -560,4 +568,3 @@ label investigar_sala:
     "Você anota o conteúdo e cobre a obra novamente."
 
     jump decidir_proxima_acao
-
