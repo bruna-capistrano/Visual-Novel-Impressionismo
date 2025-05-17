@@ -31,14 +31,14 @@ define gui.accent_color = '#0099cc'
 
 ## A cor usada para um botão de texto quando ele não está selecionado nem passa
 ## o mouse.
-define gui.idle_color = '#888888'
+define gui.idle_color = '#ffffff'
 
 ## A cor pequena é usada para texto pequeno, que precisa ser mais claro/escuro
 ## para obter o mesmo efeito.
 define gui.idle_small_color = '#aaaaaa'
 
 ## A cor que é usada para botões e barras que passam pelo mouse.
-define gui.hover_color = '#66c1e0'
+define gui.hover_color = '#ffd700'
 
 ## A cor usada em um botão de texto quando ele está selecionado, mas não
 ## focalizado. Um botão estará selecionado se for a tela atual ou o valor de

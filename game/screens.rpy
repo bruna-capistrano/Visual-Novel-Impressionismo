@@ -359,6 +359,8 @@ screen main_menu():
     frame:
         style "main_menu_frame"
 
+    add "capajogo.png"  # definindo imagem de capa
+
     ## A instrução de uso inclui outra tela dentro desta. O conteúdo real do
     ## menu principal está na tela de navegação.
     use navigation
@@ -1613,3 +1615,6 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+
+
+
