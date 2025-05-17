@@ -3,17 +3,6 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
-
-#define narrator = Character(None, kind=nvl)
-
-#define slow_dissolve = Dissolve(1.5)
-#define fade = Fade(1.0, 0.5, 0.5)
-#define fade_out = Fade(0.5, 0.5, 0.5)
-#define dissolve = Dissolve(0.5, 0.5, 0.5)
-
-
-##bruuu
-##########AQUI
 define protagonist = Character("Você")
 define monet = Character("Monet")
 define cezanne = Character("Cézanne")
@@ -312,7 +301,7 @@ label explorar_jardim:
     "Ali, entre sombras e folhas, uma figura parece se formar por instantes... não é real, mas também não é apenas imaginação."
 
     show pissarro miragem at left with dissolve 
-    
+
     "Camille Pissarro — ou algo como a memória dele — está de pé diante de uma tela invisível, pintando com gestos lentos e etéreos."
 
     protagonist "Isso é... impossível."
