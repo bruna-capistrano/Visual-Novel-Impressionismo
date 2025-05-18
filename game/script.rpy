@@ -104,7 +104,7 @@ label falar_com_monet:
 
     "Monet, com um sorriso tranquilo, ajeita o chapéu enquanto observa seu entorno. Ao notar sua presença, ele se volta para você e diz:"
 
-    monet "Bonjour. Vejo que é novo por aqui. Está procurando alguém?"  with dissolve
+    monet "Bonjour. Vejo que é nova por aqui. Está procurando alguém?"  with dissolve
 
     show protagonista inverso at right with moveinright
 
