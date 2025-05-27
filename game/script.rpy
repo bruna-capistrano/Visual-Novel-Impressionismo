@@ -95,7 +95,7 @@ label menu_cafe:
             "Observar o café em silêncio primeiro" if not pista_galeria:
                 jump observar_cafe
             
-            "Sair do café":
+            "Sair do café" if pista_rochefort or pista_galeria:
                 jump sair_cafe
 
 label falar_com_monet:
@@ -104,7 +104,7 @@ label falar_com_monet:
 
     "Monet, com um sorriso tranquilo, ajeita o chapéu enquanto observa seu entorno. Ao notar sua presença, ele se volta para você e diz:"
 
-    monet "Bonjour. Vejo que é nova por aqui. Está procurando alguém?"  with dissolve
+    monet "Bonjour. Vejo que é novo por aqui. Está procurando alguém?"  with dissolve
 
     show protagonista inverso at right with moveinright
 
@@ -125,18 +125,18 @@ label falar_com_monet:
     jump menu_monet
 
 label menu_monet:
-
-    menu:
-        "Ver pistas coletadas":
-            call mostrar_pistas from _call_mostrar_pistas_1
-        "Perguntar mais sobre Rochefort" if not pista_rochefort2:
-            jump perguntar_rochefort
-        "Observar o café em silêncio agora" if not pista_galeria:
-            hide monet with dissolve
-            jump observar_cafe
-        "Agradecer e sair discretamente":
-            hide monet with dissolve
-            jump sair_cafe
+    while True:
+        menu:
+            "Ver pistas coletadas":
+                call mostrar_pistas #from _call_mostrar_pistas_1
+            "Perguntar mais sobre Rochefort" if not pista_rochefort2:
+                jump perguntar_rochefort
+            "Observar o café em silêncio agora" if not pista_galeria:
+                hide monet with dissolve
+                jump observar_cafe
+            "Agradecer e sair discretamente":
+                hide monet with dissolve
+                jump sair_cafe
 
 label observar_cafe:
 
@@ -210,7 +210,8 @@ label cena_duvida:
     elif pista_galeria:
         jump cena_galeria
     else:
-        jump final_neutro
+        "Você sente que ainda há mais a descobrir antes de sair do café."
+        jump menu_cafe
 
 label proximo_destino:
 

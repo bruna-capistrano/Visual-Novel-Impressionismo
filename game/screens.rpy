@@ -257,7 +257,7 @@ screen quick_menu():
             textbutton _("Q. Carga") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
         ## Botão para acessar pistas coletadas:
-        textbutton "Pistas" action Jump("mostrar_pistas") xalign 0.95 yalign 0.05
+        textbutton "Pistas" action Show("mostrar_pistas") xalign 0.95 yalign 0.05
 
 ## Esse código garante que a tela quick_menu seja exibida no jogo, sempre que o
 ## jogador não tiver ocultado explicitamente a interface.
@@ -317,7 +317,7 @@ screen navigation():
 
             textbutton _("Menu principal") action MainMenu()
 
-        textbutton _("Sobre") action ShowMenu("about")
+        textbutton "Sobre" action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
@@ -1616,5 +1616,65 @@ style slider_slider:
     variant "small"
     xsize 900
 
+screen mostrar_pistas():
+    tag menu  # fecha qualquer outra tela tipo menu (como prefs ou save)
 
+    modal True  # impede cliques no jogo por trás
 
+    frame:
+        style "menu_frame"
+        xalign 0.5
+        yalign 0.5
+        padding (30, 30, 30, 30)
+
+        vbox:
+            spacing 10
+            label "🕵️ Pistas coletadas até agora:"
+
+            if pista_rochefort:
+                text "• Nome do crítico: Rochefort"
+            if pista_galeria:
+                text "• Galeria recusou obra de Pissarro"
+            if pista_obra_despedida:
+                text "• Pissarro mencionou uma obra de despedida"
+            if pista_jardim:
+                text "• Mensagem indicando os Jardins ao entardecer"
+            if pista_presenca_pissarro:
+                text "• Paleta com iniciais C.P. encontrada"
+            if pista_bilhete_jardim:
+                text "• Bilhete misterioso sobre a verdade e a luz"
+            if pista_envelope_galeria:
+                text "• Envelope lacrado deixado na galeria"
+            if pista_quadro_oculto:
+                text "• Tela escondida na galeria com mensagem enigmática"
+
+            if not (pista_rochefort or pista_galeria or pista_obra_despedida or pista_jardim or pista_presenca_pissarro or pista_bilhete_jardim or pista_envelope_galeria or pista_quadro_oculto):
+                text "Você ainda não encontrou nenhuma pista."
+
+            textbutton "Voltar":
+                action Hide("mostrar_pistas")
+                xalign 0.5
+
+screen about():
+    tag menu
+
+    frame:
+        style "menu_frame"
+        xalign 0.5
+        yalign 0.5
+        padding (30, 30, 30, 30)
+
+        vbox:
+            spacing 10
+
+            label "🎨 Sobre o Jogo"
+
+            text "A Última Tela é uma visual novel ambientada na Paris do século XIX,\ninspirada na estética e nas figuras do movimento impressionista."
+
+            text "Você assume o papel de Louise Michel, investigando o desaparecimento do pintor Camille Pissarro, em meio a cafés, galerias e mistérios artísticos."
+
+            text "Projeto desenvolvido como parte da disciplina de Projetos de Jogos do curso de Mestrado em Engenharia de Sistemas e Computação da Coppe/UFRJ."
+
+            text "Autoria: Bruna Capistrano e Flavio Dupim\nOrientação: Professor Geraldo Xexéo  \nVersão: 1.0"
+
+            textbutton "Voltar" action Return()
